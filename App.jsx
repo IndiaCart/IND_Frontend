@@ -5,15 +5,15 @@
  * @format
  */
 
-import { NewAppScreen } from '@react-native/new-app-screen';
 import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import { translations } from './constant/translation';
 
 function App() {
   const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.ViewPage}>Lorem ipsum dolor sit amet consectetur adipisicing elit. Beatae odio possimus fugiat.</Text>
+    <View style={[styles.container, { backgroundColor: '#000'  }]}>
+      <Text style={styles.ViewPage}>{translations.welcome}</Text>
     </View>
 
   );
