@@ -1,35 +1,28 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import React from 'react';
+import { StatusBar, useColorScheme, View, Text, StyleSheet } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { StatusBar, StyleSheet, Text, useColorScheme, View } from 'react-native';
+import Login from './components/Login';
 import { translations } from './constant/translation';
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+const Stack = createNativeStackNavigator();
+
+const App = () => {
+const isDarkMode = useColorScheme() === 'dark';
 
   return (
-    <View style={[styles.container, { backgroundColor: '#000'  }]}>
-      <Text style={styles.ViewPage}>{translations.welcome}</Text>
-    </View>
-
+    <>
+      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Login">
+          <Stack.Screen name="Login" component={Login}/>
+          {/* Add other screens here */}
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000' ,
-  },
-  ViewPage:{
-    marginTop: 50,
-    padding: 20,
-    fontSize: 16,
-    color: '#fff',
-  }
-});
 
 export default App;
