@@ -29,7 +29,7 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <View style={[{ backgroundColor: theme.mode =="dark"? theme.background:CustomColor.WHITE_COOL }, styles.container]}>
+        <View style={[{ backgroundColor: theme.mode == "dark" ? theme.background : CustomColor.WHITE_COOL }, styles.container]}>
             <Text style={[{ color: theme.text }, styles.title]}>
                 Log in to Your{'\n'}
                 <Text style={{ fontWeight: 'bold', color: theme.text }}>IndiaCart Account!</Text>
@@ -68,7 +68,7 @@ const Login = ({ navigation }) => {
                             style={[
                                 styles.tabText,
                                 {
-                                    color: loginType === 'email' ? CustomColor.CYAN_50  : theme.text,
+                                    color: loginType === 'email' ? CustomColor.CYAN_50 : theme.text,
                                 },
                             ]}
                         >
@@ -138,10 +138,14 @@ const Login = ({ navigation }) => {
             <TouchableOpacity style={styles.googleButton}>
                 <Image
                     source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }}
-                    style={{ width: 20, height: 20, marginRight: 10 }}
+                    style={{ width: 24, height: 24, marginRight: 10 }}
                 />
-                <Text style={styles.googleText}>Login with Google</Text>
+                <Image
+                    source={{ uri: 'https://img.icons8.com/ios-filled/50/000000/mac-os.png' }}
+                    style={{ width: 24, height: 24 }}
+                />
             </TouchableOpacity>
+
 
             {/* Sign up */}
             <Text style={[styles.signupPrompt, { color: theme.text }]}>
@@ -247,7 +251,8 @@ const styles = StyleSheet.create({
         marginBottom: 16,
     },
     googleButton: {
-        backgroundColor: '#fff',
+        backgroundColor: '#000',
+        color: '#fff',
         borderRadius: 12,
         paddingVertical: 12,
         flexDirection: 'row',
