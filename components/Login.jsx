@@ -29,127 +29,134 @@ const Login = ({ navigation }) => {
     };
 
     return (
-        <View style={[{ backgroundColor: theme.mode =="dark"? theme.background:CustomColor.WHITE_COOL }, styles.container]}>
+        <View style={[{ backgroundColor: theme.mode == "dark" ? theme.background : CustomColor.WHITE_COOL }, styles.container]}>
             <Text style={[{ color: theme.text }, styles.title]}>
                 Log in to Your{'\n'}
                 <Text style={{ fontWeight: 'bold', color: theme.text }}>IndiaCart Account!</Text>
             </Text>
 
-            {/* Tab Switch */}
-            <View style={styles.tabContainer}>
-                <View style={[styles.tabBackground, { backgroundColor: theme.inputBackground }]}>
-                    <TouchableOpacity
-                        style={[
-                            styles.tabButton,
-                            loginType === 'phone' && { backgroundColor: theme.primary },
-                        ]}
-                        onPress={() => setLoginType('phone')}
-                    >
-                        <Text
+            <View style={styles.loginSection}>
+                {/* Tab Switch */}
+                {/* <View style={styles.tabContainer}>
+                    <View style={[styles.tabBackground]}>
+                        <TouchableOpacity
                             style={[
-                                styles.tabText,
-                                {
-                                    color: loginType === 'phone' ? CustomColor.CYAN_50 : theme.text,
-                                },
+                                styles.tabButton,
+                                loginType === 'phone' && { backgroundColor: theme.primary , borderBottomWidth: 2, borderBottomColor: 'green',},
                             ]}
+                            onPress={() => setLoginType('phone')}
                         >
-                            Phone
-                        </Text>
-                    </TouchableOpacity>
+                            <Text
+                                style={[
+                                    styles.tabText,
+                                    {
+                                        color: loginType === 'phone' ? CustomColor.CYAN_50 : theme.text,
+                                    },
+                                ]}
+                            >
+                                Phone
+                            </Text>
+                        </TouchableOpacity>
 
-                    <TouchableOpacity
-                        style={[
-                            styles.tabButton,
-                            loginType === 'email' && { backgroundColor: theme.primary },
-                        ]}
-                        onPress={() => setLoginType('email')}
-                    >
-                        <Text
+                        <TouchableOpacity
                             style={[
-                                styles.tabText,
-                                {
-                                    color: loginType === 'email' ? CustomColor.CYAN_50  : theme.text,
-                                },
+                                styles.tabButton,
+                                loginType === 'OTP' && { backgroundColor: theme.primary , borderBottomWidth: 2, borderBottomColor: 'green',},
                             ]}
+                            onPress={() => setLoginType('OTP')}
                         >
-                            Email
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+                            <Text
+                                style={[
+                                    styles.tabText,
+                                    {
+                                        color: loginType === 'OTP' ? CustomColor.CYAN_50  : theme.text,
+                                    },
+                                ]}
+                            >
+                                OTP
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View> */}
 
-            {/* Inputs */}
-            <TextInput
-                placeholder={loginType === 'phone' ? 'Phone Number' : 'Email'}
-                keyboardType={loginType === 'phone' ? 'phone-pad' : 'email-address'}
-                placeholderTextColor={theme.placeholder || '#999'}
-                style={[
-                    styles.input,
-                    { backgroundColor: theme.inputBackground, color: theme.text },
-                ]}
-                value={credentials.loginId}
-                onChangeText={(text) => handleChange('loginId', text)}
-            />
-
-            <View
-                style={[
-                    styles.passwordRow,
-                    { backgroundColor: theme.inputBackground },
-                ]}
-            >
+                {/* Inputs */}
                 <TextInput
-                    placeholder="Password"
+                    placeholder={loginType === 'phone' ? 'Phone Number' : 'Email'}
+                    keyboardType={loginType === 'phone' ? 'phone-pad' : 'email-address'}
                     placeholderTextColor={theme.placeholder || '#999'}
-                    style={[styles.passwordInput, { color: theme.text }]}
-                    secureTextEntry={!showPassword}
-                    value={credentials.password}
-                    onChangeText={(text) => handleChange('password', text)}
+                    style={[
+                        styles.input,
+                        { backgroundColor: theme.inputBackground, color: theme.text },
+                    ]}
+                    value={credentials.loginId}
+                    onChangeText={(text) => handleChange('loginId', text)}
                 />
-                <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                    <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
-                </TouchableOpacity>
-            </View>
 
-            {/* Remember Me + Forgot Password */}
-            <View style={styles.optionsRow}>
-                <View style={styles.rememberMe}>
-                    <Switch
-                        value={rememberMe}
-                        onValueChange={() => setRememberMe(!rememberMe)}
-                        thumbColor={rememberMe ? '#2563eb' : '#ccc'}
+                <View
+                    style={[
+                        styles.passwordRow,
+                        { backgroundColor: theme.inputBackground },
+                    ]}
+                >
+                    <TextInput
+                        placeholder="Password"
+                        placeholderTextColor={theme.placeholder || '#999'}
+                        style={[styles.passwordInput, { color: theme.text }]}
+                        secureTextEntry={!showPassword}
+                        value={credentials.password}
+                        onChangeText={(text) => handleChange('password', text)}
                     />
-                    <Text style={[styles.rememberText, { color: theme.text }]}>
-                        Remember Me
-                    </Text>
+                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                        <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
+                    </TouchableOpacity>
                 </View>
-                <TouchableOpacity>
-                    <Text style={styles.forgotPassword}>Forgot Password?</Text>
+
+                {/* Remember Me + Forgot Password */}
+                <View style={styles.optionsRow}>
+                    <View style={styles.rememberMe}>
+                        <Switch
+                            value={rememberMe}
+                            onValueChange={() => setRememberMe(!rememberMe)}
+                            thumbColor={rememberMe ? '#2563eb' : '#ccc'}
+                        />
+                        <Text style={[styles.rememberText, { color: theme.text }]}>
+                            Remember Me
+                        </Text>
+                    </View>
+                    <TouchableOpacity>
+                        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+                    </TouchableOpacity>
+                </View>
+
+                {/* Login */}
+                <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
+                    <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
-            </View>
 
-            {/* Login */}
-            <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-                <Text style={styles.loginText}>Login</Text>
-            </TouchableOpacity>
+                <View style={styles.loginOptionContainer}>
+                    <Text style={styles.orText}>Or Login with</Text>
+                    <TouchableOpacity >
+                        <Text style={styles.OTPText}> OTP</Text>
+                    </TouchableOpacity>
+                </View>
 
-            <Text style={styles.orText}>Or continue with</Text>
+                {/* Google Login */}
+                <TouchableOpacity style={styles.googleButton}>
+                    <Image
+                        source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }}
+                        style={{ width: 20, height: 20, marginRight: 10 }}
+                    />
+                    <Text style={styles.googleText}>Login with Google</Text>
+                </TouchableOpacity>
 
-            {/* Google Login */}
-            <TouchableOpacity style={styles.googleButton}>
-                <Image
-                    source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }}
-                    style={{ width: 20, height: 20, marginRight: 10 }}
-                />
-                <Text style={styles.googleText}>Login with Google</Text>
-            </TouchableOpacity>
-
-            {/* Sign up */}
-            <Text style={[styles.signupPrompt, { color: theme.text }]}>
-                Don’t have an account?{' '}
-                <Text style={styles.signupLink} onPress={() => navigation.navigate('Signup')}>
-                    Sign Up
+                {/* Sign up */}
+                <Text style={[styles.signupPrompt, { color: theme.text }]}>
+                    Don’t have an account?{' '}
+                    <Text style={styles.signupLink} onPress={() => navigation.navigate('Signup')}>
+                        Sign Up
+                    </Text>
                 </Text>
-            </Text>
+            </View>
         </View>
     );
 };
@@ -160,36 +167,37 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 24,
-        justifyContent: 'center',
+        justifyContent: 'start',
+
     },
     title: {
         fontSize: 24,
         fontWeight: '400',
-        marginBottom: 24,
+        position:"relative",
+        top:10
     },
-
-    // Tab Switch Style
-    tabContainer: {
-        alignItems: 'center',
-        marginBottom: 20,
+    loginSection: {
+        justifyContent: "center",
+        flex: 1,
+        alignItems: "start",
     },
     tabBackground: {
         flexDirection: 'row',
+        gap: 20,
         borderRadius: 30,
         padding: 4,
         width: '100%',
     },
     tabButton: {
-        flex: 1,
         paddingVertical: 12,
-        borderRadius: 30,
-        alignItems: 'center',
+        // borderRadius: 30,
+        alignItems: 'start',
+
     },
     tabText: {
         fontSize: 16,
         fontWeight: '600',
     },
-
     input: {
         padding: 14,
         borderRadius: 12,
@@ -241,10 +249,22 @@ const styles = StyleSheet.create({
         fontSize: 18,
         fontWeight: '600',
     },
+    loginOptionContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 10,
+        marginBottom:20
+
+    },
     orText: {
-        color: '#aaa',
-        textAlign: 'center',
-        marginBottom: 16,
+        fontSize: 16,
+        color: '#555',
+    },
+    OTPText: {
+        fontSize: 16,
+        color: '#1e90ff', // or theme.primary
+        fontWeight: 'bold',
     },
     googleButton: {
         backgroundColor: '#fff',
