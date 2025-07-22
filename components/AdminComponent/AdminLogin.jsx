@@ -1,4 +1,4 @@
-import { ThemeContext } from '../design/ThemeContext';
+import { ThemeContext } from '../../design/ThemeContext';
 import React, { useContext, useState } from 'react';
 import {
     View,
@@ -11,9 +11,9 @@ import {
     Image,
     Platform
 } from 'react-native';
-import { CustomColor } from '../design/Color';
+import { CustomColor } from '../../design/Color';
 
-const Login = ({ navigation }) => {
+const AdminLogin = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
     const [loginType, setLoginType] = useState('phone');
     const [credentials, setCredentials] = useState({ loginId: '', password: '' });
@@ -37,7 +37,7 @@ const Login = ({ navigation }) => {
             { backgroundColor: isDark ? theme.background : CustomColor.GREY_10 }
         ]}>
             <Text style={[styles.title, { color: theme.text }]}>
-                Log in to Your{'\n'}
+                Admin Log in to Your{'\n'}
                 <Text style={{ fontWeight: 'bold', color: theme.text }}>IndiaCart Account!</Text>
             </Text>
 
@@ -91,20 +91,19 @@ const Login = ({ navigation }) => {
                         <Switch
                             value={rememberMe}
                             onValueChange={() => setRememberMe(!rememberMe)}
-                           thumbColor={rememberMe ? '#ffffff' : '#f4f3f4'}
-                            trackColor={{ false: '#d1d1d1', true: "#2563eb" }} 
+                            thumbColor={rememberMe ? '#2563eb' : '#ccc'}
                         />
                         <Text style={[styles.rememberText, { color: theme.text }]}>
                             Remember Me
                         </Text>
                     </View>
                     <TouchableOpacity>
-                        <Text style={[styles.forgotPassword]}>Forgot Password?</Text>
+                        <Text style={styles.forgotPassword}>Forgot Password?</Text>
                     </TouchableOpacity>
                 </View>
 
                 {/* Login Button */}
-                <TouchableOpacity style={[styles.loginButton, !isDark && styles.lightShadow, {backgroundColor:CustomColor.ORANGE_60}]} onPress={handleLogin}>
+                <TouchableOpacity style={[styles.loginButton, !isDark && styles.lightShadow, {backgroundColor:CustomColor.CYAN_80}]} onPress={handleLogin}>
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
 
@@ -119,13 +118,13 @@ const Login = ({ navigation }) => {
                 {/* Social Media Login */}
                 <View style={styles.socialRow}>
                     <TouchableOpacity style={styles.iconButton}>
-                        <Image source={require('../assets/google.png')} style={styles.socialIcon} />
+                        <Image source={require('../../assets/google.png')} style={styles.socialIcon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton}>
-                        <Image source={require('../assets/mac-os.png')} style={styles.socialIcon} />
+                        <Image source={require('../../assets/mac-os.png')} style={styles.socialIcon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton}>
-                        <Image source={require('../assets/windows-10.png')} style={styles.socialIcon} />
+                        <Image source={require('../../assets/windows-10.png')} style={styles.socialIcon} />
                     </TouchableOpacity>
                 </View>
 
@@ -137,8 +136,8 @@ const Login = ({ navigation }) => {
                     </Text>
                 </Text>
                 <Text style={[styles.signupPrompt, { color: theme.text , marginTop:12}]}>
-                    Admin?{' '}
-                    <Text style={styles.signupLink} onPress={() => navigation.navigate('AdminLogin')}>
+                    User?{' '}
+                    <Text style={styles.signupLink} onPress={() => navigation.navigate('Login')}>
                         Log In
                     </Text>
                 </Text>
@@ -147,7 +146,7 @@ const Login = ({ navigation }) => {
     );
 };
 
-export default Login;
+export default AdminLogin;
 
 const styles = StyleSheet.create({
     container: {
@@ -221,6 +220,9 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 20
     },
+    signupLink:{
+        color:"#2563eb"
+    },  
     orText: {
         fontSize: 16,
         color: '#555',
@@ -234,7 +236,7 @@ const styles = StyleSheet.create({
     signupPrompt: {
         textAlign: 'center',
     },
-    signupLink: {
+    AdminLink: {
         color: '#2563eb',
         fontWeight: '600',
     },

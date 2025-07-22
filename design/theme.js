@@ -1,7 +1,7 @@
 export const LightTheme = {
   mode: 'light',
   background: '#ffffff',
-  text: '#000',
+  text: '#033348',
   inputBackground: '#ffffff',
   placeholder: '#999'
 
