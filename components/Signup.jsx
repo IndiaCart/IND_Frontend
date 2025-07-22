@@ -7,6 +7,7 @@ import {
   StyleSheet,
   Alert,
   Image,
+  Platform,
 } from 'react-native';
 import { ThemeContext } from '../design/ThemeContext';
 import { CustomColor } from '../design/Color';
@@ -14,10 +15,11 @@ import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const Signup = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
+  const isDark = theme.mode === 'dark';
+
   const [SignupType, setSignupType] = useState('phone');
   const [credentials, setCredentials] = useState({ SignupId: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(true);
 
   const handleChange = (name, value) => {
     setCredentials({ ...credentials, [name]: value });
@@ -31,40 +33,28 @@ const Signup = ({ navigation }) => {
   return (
     <View
       style={[
-        {
-          backgroundColor:
-            theme.mode === 'dark' ? theme.background : CustomColor.WHITE_COOL,
-        },
         styles.container,
+        { backgroundColor: isDark ? theme.background : CustomColor.WHITE_COOL },
       ]}
     >
       {/* Heading */}
-      <Text style={[{ color: theme.text }, styles.title]}>
-        Log in to Your{'\n'}
+      <Text style={[styles.title, { color: theme.text }]}>
+        Register in to Your{'\n'}
         <Text style={styles.boldText}>IndiaCart Account!</Text>
       </Text>
 
       {/* Social Login */}
-      <View style={styles.socialRow}>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={{ uri: 'https://img.icons8.com/color/48/google-logo.png' }}
-            style={styles.socialIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={{ uri: 'https://img.icons8.com/ios-filled/50/000000/mac-os.png' }}
-            style={styles.socialIcon}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.iconButton}>
-          <Image
-            source={{ uri: 'https://img.icons8.com/color/48/windows-10.png' }}
-            style={styles.socialIcon}
-          />
-        </TouchableOpacity>
-      </View>
+       <View style={styles.socialRow}>
+              <TouchableOpacity style={styles.iconButton}>
+                  <Image source={require('../assets/google.png')} style={styles.socialIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton}>
+                  <Image source={require('../assets/mac-os.png')} style={styles.socialIcon} />
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.iconButton}>
+                  <Image source={require('../assets/windows-10.png')} style={styles.socialIcon} />
+              </TouchableOpacity>
+          </View>
 
       {/* Form Inputs */}
       <View style={styles.formGroup}>
@@ -78,7 +68,13 @@ const Signup = ({ navigation }) => {
               style={[
                 styles.input,
                 styles.nameInput,
-                { backgroundColor: theme.inputBackground, color: theme.text },
+                {
+                  backgroundColor: theme.inputBackground,
+                  color: theme.text,
+                  borderColor: isDark ? 'transparent' : '#ccc',
+                  borderWidth: isDark ? 0 : 1,
+                  ...(!isDark ? styles.lightShadow : {})
+                },
               ]}
             />
           </View>
@@ -91,7 +87,13 @@ const Signup = ({ navigation }) => {
               style={[
                 styles.input,
                 styles.nameInput,
-                { backgroundColor: theme.inputBackground, color: theme.text },
+                {
+                  backgroundColor: theme.inputBackground,
+                  color: theme.text,
+                  borderColor: isDark ? 'transparent' : '#ccc',
+                  borderWidth: isDark ? 0 : 1,
+                  ...(!isDark ? styles.lightShadow : {})
+                },
               ]}
             />
           </View>
@@ -111,13 +113,31 @@ const Signup = ({ navigation }) => {
           onChangeText={(text) => handleChange('SignupId', text)}
           style={[
             styles.input,
-            { backgroundColor: theme.inputBackground, color: theme.text },
+            {
+              backgroundColor: theme.inputBackground,
+              color: theme.text,
+              borderColor: isDark ? 'transparent' : '#ccc',
+              borderWidth: isDark ? 0 : 1,
+              ...(!isDark ? styles.lightShadow : {})
+            },
           ]}
         />
 
         {/* Password */}
         <Text style={[styles.label, { color: theme.text }]}>Password</Text>
-        <View style={styles.passwordWrapper}>
+        <View
+          style={[
+            styles.passwordWrapper,
+            {
+              backgroundColor: theme.inputBackground,
+              borderRadius: 8,
+              paddingHorizontal: 10,
+              borderColor: isDark ? 'transparent' : '#ccc',
+              borderWidth: isDark ? 0 : 1,
+              ...(!isDark ? styles.lightShadow : {})
+            },
+          ]}
+        >
           <TextInput
             placeholder="Enter password"
             placeholderTextColor={theme.placeholder || '#999'}
@@ -127,24 +147,18 @@ const Signup = ({ navigation }) => {
             style={[
               styles.input,
               styles.passwordInput,
-              { color: theme.text },
+              { color: theme.text, marginBottom: 0, backgroundColor: 'transparent' },
             ]}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <FontAwesome5
-              name={showPassword ? 'eye-slash' : 'eye'}
-              size={20}
-              color="#000"
-              solid
-              style={styles.eyeIcon}
-            />
-          </TouchableOpacity>
+                <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
+            </TouchableOpacity>
         </View>
         <Text style={styles.dummyText}>Minimum length is 8 characters</Text>
       </View>
 
       {/* Signup Button */}
-      <TouchableOpacity style={styles.signupButton} onPress={handleSignup}>
+      <TouchableOpacity style={[styles.signupButton, !isDark && styles.lightShadow]} onPress={handleSignup}>
         <Text style={styles.signupText}>Signup</Text>
       </TouchableOpacity>
 
@@ -188,7 +202,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 50,
     padding: 10,
-    elevation: 2,
   },
   socialIcon: {
     width: 24,
@@ -211,12 +224,12 @@ const styles = StyleSheet.create({
   passwordWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
+    marginBottom: 10,
   },
   passwordInput: {
     flex: 1,
   },
   eyeIcon: {
-    fontSize: 20,
     marginLeft: 10,
   },
   signupButton: {
@@ -255,5 +268,18 @@ const styles = StyleSheet.create({
   },
   nameInput: {
     marginBottom: 0,
+  },
+  lightShadow: {
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.1,
+        shadowRadius: 3,
+      },
+      android: {
+        elevation: 2,
+      },
+    }),
   },
 });
