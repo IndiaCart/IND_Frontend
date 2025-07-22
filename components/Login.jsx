@@ -21,19 +21,20 @@ const Login = () => {
         try {
             console.log('Attempting to log in with:', credentials);
 
+            /*
             const response = await fetch('https://mobzway-task01.onrender.com/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(credentials),
                 credentials: 'include',
             });
+            */
+            // const data = await response.json();
+            // console.log('Server Response:', data);
 
-            const data = await response.json();
-            console.log('Server Response:', data);
-
-            if (response.ok) {
+            if (true) {
                 Alert.alert('Success', 'Login successful!');
-                navigation.navigate('LiveUsers');
+                navigation.navigate('Home');
             } else {
                 Alert.alert('Login Failed', data.error || 'Unknown error');
             }
@@ -44,7 +45,7 @@ const Login = () => {
     };
 
     const handleSignUp = () => {
-        navigation.navigate('UserForm');
+        navigation.navigate('Signup');
     };
 
     const handleHome = () => {
