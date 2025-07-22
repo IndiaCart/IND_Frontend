@@ -15,17 +15,19 @@ import { CustomColor } from '../../design/Color';
 
 const AdminLogin = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
-    const [loginType, setLoginType] = useState('phone');
+    const isDark = theme.mode === "dark";
+
+    const [loginType, setLoginType] = useState('phone'); // Toggle for phone/email input
     const [credentials, setCredentials] = useState({ loginId: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(true);
 
-    const isDark = theme.mode === "dark";
-
+    // Handle input changes
     const handleChange = (name, value) => {
         setCredentials({ ...credentials, [name]: value });
     };
 
+    // Dummy login handler
     const handleLogin = () => {
         Alert.alert('Success', 'Login successful!');
         navigation.navigate('Home');
@@ -36,13 +38,14 @@ const AdminLogin = ({ navigation }) => {
             styles.container,
             { backgroundColor: isDark ? theme.background : CustomColor.GREY_10 }
         ]}>
+            {/* Title */}
             <Text style={[styles.title, { color: theme.text }]}>
                 Admin Log in to Your{'\n'}
-                <Text style={{ fontWeight: 'bold', color: theme.text }}>IndiaCart Account!</Text>
+                <Text style={{ fontWeight: 'bold' }}>IndiaCart Account!</Text>
             </Text>
 
             <View style={styles.loginSection}>
-                {/* Input */}
+                {/* Login ID input (phone/email) */}
                 <TextInput
                     placeholder={loginType === 'phone' ? 'Phone Number' : 'Email'}
                     keyboardType={loginType === 'phone' ? 'phone-pad' : 'email-address'}
@@ -55,23 +58,22 @@ const AdminLogin = ({ navigation }) => {
                             borderColor: isDark ? 'transparent' : '#ccc',
                             borderWidth: isDark ? 0 : 1,
                             ...(!isDark ? styles.lightShadow : {})
-                        },
+                        }
                     ]}
                     value={credentials.loginId}
                     onChangeText={(text) => handleChange('loginId', text)}
                 />
 
-                <View
-                    style={[
-                        styles.passwordRow,
-                        {
-                            backgroundColor: theme.inputBackground,
-                            borderColor: isDark ? 'transparent' : '#ccc',
-                            borderWidth: isDark ? 0 : 1,
-                            ...(!isDark ? styles.lightShadow : {})
-                        },
-                    ]}
-                >
+                {/* Password input with visibility toggle */}
+                <View style={[
+                    styles.passwordRow,
+                    {
+                        backgroundColor: theme.inputBackground,
+                        borderColor: isDark ? 'transparent' : '#ccc',
+                        borderWidth: isDark ? 0 : 1,
+                        ...(!isDark ? styles.lightShadow : {})
+                    }
+                ]}>
                     <TextInput
                         placeholder="Password"
                         placeholderTextColor={theme.placeholder || '#999'}
@@ -81,41 +83,49 @@ const AdminLogin = ({ navigation }) => {
                         onChangeText={(text) => handleChange('password', text)}
                     />
                     <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                        <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
+                        <Text style={styles.eyeIcon}>
+                            {showPassword ? '🙈' : '👁️'}
+                        </Text>
                     </TouchableOpacity>
                 </View>
 
-                {/* Remember Me */}
+                {/* Remember Me & Forgot Password */}
                 <View style={styles.optionsRow}>
                     <View style={styles.rememberMe}>
                         <Switch
                             value={rememberMe}
                             onValueChange={() => setRememberMe(!rememberMe)}
                             thumbColor={rememberMe ? '#2563eb' : '#ccc'}
+                            trackColor={{ false: '#d1d1d1', true: "#2563eb" }}
                         />
-                        <Text style={[styles.rememberText, { color: theme.text }]}>
-                            Remember Me
-                        </Text>
+                        <Text style={[styles.rememberText, { color: theme.text }]}>Remember Me</Text>
                     </View>
                     <TouchableOpacity>
                         <Text style={styles.forgotPassword}>Forgot Password?</Text>
                     </TouchableOpacity>
                 </View>
 
-                {/* Login Button */}
-                <TouchableOpacity style={[styles.loginButton, !isDark && styles.lightShadow, {backgroundColor:CustomColor.CYAN_80}]} onPress={handleLogin}>
+                {/* Login button */}
+                <TouchableOpacity
+                    style={[
+                        styles.loginButton,
+                        !isDark && styles.lightShadow,
+                        { backgroundColor: CustomColor.CYAN_80 }
+                    ]}
+                    onPress={handleLogin}
+                >
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
 
-                {/* OTP login */}
+                {/* OTP login option */}
                 <View style={styles.loginOptionContainer}>
                     <Text style={styles.orText}>Or Login with</Text>
-                    <TouchableOpacity >
+                    <TouchableOpacity>
                         <Text style={styles.OTPText}> OTP</Text>
                     </TouchableOpacity>
                 </View>
 
-                {/* Social Media Login */}
+                {/* Social login icons */}
                 <View style={styles.socialRow}>
                     <TouchableOpacity style={styles.iconButton}>
                         <Image source={require('../../assets/google.png')} style={styles.socialIcon} />
@@ -128,17 +138,32 @@ const AdminLogin = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Signup */}
+                {/* Signup Prompt */}
                 <Text style={[styles.signupPrompt, { color: theme.text }]}>
                     Don’t have an account?{' '}
-                    <Text style={styles.signupLink} onPress={() => navigation.navigate('Signup')}>
+                    <Text
+                        style={styles.signupLink}
+                        onPress={() => navigation.navigate('AdminSignup')}
+                    >
                         Sign Up
                     </Text>
                 </Text>
-                <Text style={[styles.signupPrompt, { color: theme.text , marginTop:12}]}>
+
+                {/* Navigation to user login/signup */}
+                <Text style={[styles.signupPrompt, { color: theme.text, marginTop: 12 }]}>
                     User?{' '}
-                    <Text style={styles.signupLink} onPress={() => navigation.navigate('Login')}>
+                    <Text
+                        style={styles.signupLink}
+                        onPress={() => navigation.navigate('Login')}
+                    >
                         Log In
+                    </Text>{' '}
+                    |{' '}
+                    <Text
+                        style={styles.signupLink}
+                        onPress={() => navigation.navigate('Signup')}
+                    >
+                        Sign Up
                     </Text>
                 </Text>
             </View>
@@ -148,6 +173,9 @@ const AdminLogin = ({ navigation }) => {
 
 export default AdminLogin;
 
+// ==========================
+// Styles
+// ==========================
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -156,7 +184,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: '400',
-        marginBottom: 20
+        marginBottom: 20,
     },
     loginSection: {
         flex: 1,
@@ -202,7 +230,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     loginButton: {
-        // backgroundColor: '#2563eb',
         borderRadius: 12,
         paddingVertical: 16,
         alignItems: 'center',
@@ -218,11 +245,8 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
-        marginBottom: 20
+        marginBottom: 20,
     },
-    signupLink:{
-        color:"#2563eb"
-    },  
     orText: {
         fontSize: 16,
         color: '#555',
@@ -236,7 +260,7 @@ const styles = StyleSheet.create({
     signupPrompt: {
         textAlign: 'center',
     },
-    AdminLink: {
+    signupLink: {
         color: '#2563eb',
         fontWeight: '600',
     },

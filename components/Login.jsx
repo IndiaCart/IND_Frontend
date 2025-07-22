@@ -19,30 +19,34 @@ const Login = ({ navigation }) => {
     const [credentials, setCredentials] = useState({ loginId: '', password: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(true);
-
     const isDark = theme.mode === "dark";
 
+    // Update input field values
     const handleChange = (name, value) => {
         setCredentials({ ...credentials, [name]: value });
     };
 
+    // Dummy login handler
     const handleLogin = () => {
         Alert.alert('Success', 'Login successful!');
         navigation.navigate('Home');
     };
 
     return (
-        <View style={[
-            styles.container,
-            { backgroundColor: isDark ? theme.background : CustomColor.GREY_10 }
-        ]}>
+        <View
+            style={[
+                styles.container,
+                { backgroundColor: isDark ? theme.background : CustomColor.GREY_10 }
+            ]}
+        >
+            {/* Title */}
             <Text style={[styles.title, { color: theme.text }]}>
                 Log in to Your{'\n'}
-                <Text style={{ fontWeight: 'bold', color: theme.text }}>IndiaCart Account!</Text>
+                <Text style={{ fontWeight: 'bold' }}>IndiaCart Account!</Text>
             </Text>
 
             <View style={styles.loginSection}>
-                {/* Input */}
+                {/* Login ID Input */}
                 <TextInput
                     placeholder={loginType === 'phone' ? 'Phone Number' : 'Email'}
                     keyboardType={loginType === 'phone' ? 'phone-pad' : 'email-address'}
@@ -61,6 +65,7 @@ const Login = ({ navigation }) => {
                     onChangeText={(text) => handleChange('loginId', text)}
                 />
 
+                {/* Password Input with Toggle */}
                 <View
                     style={[
                         styles.passwordRow,
@@ -85,14 +90,14 @@ const Login = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Remember Me */}
+                {/* Remember Me + Forgot Password */}
                 <View style={styles.optionsRow}>
                     <View style={styles.rememberMe}>
                         <Switch
                             value={rememberMe}
                             onValueChange={() => setRememberMe(!rememberMe)}
-                           thumbColor={rememberMe ? '#ffffff' : '#f4f3f4'}
-                            trackColor={{ false: '#d1d1d1', true: "#2563eb" }} 
+                            thumbColor={rememberMe ? '#ffffff' : '#f4f3f4'}
+                            trackColor={{ false: '#d1d1d1', true: "#2563eb" }}
                         />
                         <Text style={[styles.rememberText, { color: theme.text }]}>
                             Remember Me
@@ -104,14 +109,21 @@ const Login = ({ navigation }) => {
                 </View>
 
                 {/* Login Button */}
-                <TouchableOpacity style={[styles.loginButton, !isDark && styles.lightShadow, {backgroundColor:CustomColor.ORANGE_60}]} onPress={handleLogin}>
+                <TouchableOpacity
+                    style={[
+                        styles.loginButton,
+                        !isDark && styles.lightShadow,
+                        { backgroundColor: CustomColor.ORANGE_60 }
+                    ]}
+                    onPress={handleLogin}
+                >
                     <Text style={styles.loginText}>Login</Text>
                 </TouchableOpacity>
 
-                {/* OTP login */}
+                {/* OTP Login Option */}
                 <View style={styles.loginOptionContainer}>
                     <Text style={styles.orText}>Or Login with</Text>
-                    <TouchableOpacity >
+                    <TouchableOpacity>
                         <Text style={styles.OTPText}> OTP</Text>
                     </TouchableOpacity>
                 </View>
@@ -129,17 +141,32 @@ const Login = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Signup */}
+                {/* Signup Prompt */}
                 <Text style={[styles.signupPrompt, { color: theme.text }]}>
                     Don’t have an account?{' '}
-                    <Text style={styles.signupLink} onPress={() => navigation.navigate('Signup')}>
+                    <Text
+                        style={styles.signupLink}
+                        onPress={() => navigation.navigate('Signup')}
+                    >
                         Sign Up
                     </Text>
                 </Text>
-                <Text style={[styles.signupPrompt, { color: theme.text , marginTop:12}]}>
+
+                {/* Admin Prompt */}
+                <Text style={[styles.signupPrompt, { color: theme.text, marginTop: 12 }]}>
                     Admin?{' '}
-                    <Text style={styles.signupLink} onPress={() => navigation.navigate('AdminLogin')}>
+                    <Text
+                        style={styles.signupLink}
+                        onPress={() => navigation.navigate('AdminLogin')}
+                    >
                         Log In
+                    </Text>{' '}
+                    |{' '}
+                    <Text
+                        style={styles.signupLink}
+                        onPress={() => navigation.navigate('AdminSignup')}
+                    >
+                        Sign Up
                     </Text>
                 </Text>
             </View>
@@ -149,6 +176,9 @@ const Login = ({ navigation }) => {
 
 export default Login;
 
+// ==========================
+// Styles
+// ==========================
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -157,7 +187,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: '400',
-        marginBottom: 20
+        marginBottom: 20,
     },
     loginSection: {
         flex: 1,
@@ -203,7 +233,6 @@ const styles = StyleSheet.create({
         fontWeight: '600',
     },
     loginButton: {
-        // backgroundColor: '#2563eb',
         borderRadius: 12,
         paddingVertical: 16,
         alignItems: 'center',
@@ -219,7 +248,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 10,
-        marginBottom: 20
+        marginBottom: 20,
     },
     orText: {
         fontSize: 16,

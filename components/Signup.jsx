@@ -44,17 +44,17 @@ const Signup = ({ navigation }) => {
       </Text>
 
       {/* Social Login */}
-       <View style={styles.socialRow}>
-              <TouchableOpacity style={styles.iconButton}>
-                  <Image source={require('../assets/google.png')} style={styles.socialIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.iconButton}>
-                  <Image source={require('../assets/mac-os.png')} style={styles.socialIcon} />
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.iconButton}>
-                  <Image source={require('../assets/windows-10.png')} style={styles.socialIcon} />
-              </TouchableOpacity>
-          </View>
+      <View style={styles.socialRow}>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image source={require('../assets/google.png')} style={styles.socialIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image source={require('../assets/mac-os.png')} style={styles.socialIcon} />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.iconButton}>
+          <Image source={require('../assets/windows-10.png')} style={styles.socialIcon} />
+        </TouchableOpacity>
+      </View>
 
       {/* Form Inputs */}
       <View style={styles.formGroup}>
@@ -104,9 +104,7 @@ const Signup = ({ navigation }) => {
           {SignupType === 'phone' ? 'Phone Number' : 'Email'}
         </Text>
         <TextInput
-          placeholder={
-            SignupType === 'phone' ? 'Enter phone number' : 'Enter email'
-          }
+          placeholder={SignupType === 'phone' ? 'Enter phone number' : 'Enter email'}
           keyboardType={SignupType === 'phone' ? 'phone-pad' : 'email-address'}
           placeholderTextColor={theme.placeholder || '#999'}
           value={credentials.SignupId}
@@ -151,25 +149,38 @@ const Signup = ({ navigation }) => {
             ]}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
-            </TouchableOpacity>
+            <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
+          </TouchableOpacity>
         </View>
         <Text style={styles.dummyText}>Minimum length is 8 characters</Text>
       </View>
 
       {/* Signup Button */}
-      <TouchableOpacity style={[styles.signupButton, !isDark && styles.lightShadow]} onPress={handleSignup}>
-        <Text style={styles.signupText}>Signup</Text>
+      <TouchableOpacity
+        style={[styles.signupButton, !isDark && styles.lightShadow,
+        { backgroundColor: CustomColor.ORANGE_60 }]}
+        onPress={handleSignup}
+      >
+        <Text style={styles.signupText}>Sign Up</Text>
       </TouchableOpacity>
 
-      {/* Bottom Prompt */}
+      {/* User Login Prompt */}
       <Text style={[styles.signupPrompt, { color: theme.text }]}>
         Have an account?{' '}
-        <Text
-          style={styles.signupLink}
-          onPress={() => navigation.navigate('Login')}
-        >
+        <Text style={styles.signupLink} onPress={() => navigation.navigate('Login')}>
           Login
+        </Text>
+      </Text>
+
+      {/* Admin Prompt */}
+      <Text style={[styles.signupPrompt, { color: theme.text, marginTop: 12 }]}>
+        Admin?{' '}
+        <Text style={styles.signupLink} onPress={() => navigation.navigate('AdminLogin')}>
+          Log In
+        </Text>{' '}
+        |{' '}
+        <Text style={styles.signupLink} onPress={() => navigation.navigate('AdminSignup')}>
+          Sign Up
         </Text>
       </Text>
     </View>
@@ -231,6 +242,7 @@ const styles = StyleSheet.create({
   },
   eyeIcon: {
     marginLeft: 10,
+    fontSize: 18,
   },
   signupButton: {
     backgroundColor: '#2563eb',

@@ -6,6 +6,7 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import BottomTabs from './BottomTabs';
 import AdminLogin from '../components/AdminComponent/AdminLogin';
+import AdminSignup from '../components/AdminComponent/AdminSignup';
 const AppNavigation = () => {
 const Stack = createNativeStackNavigator();
   return (
@@ -15,6 +16,7 @@ const Stack = createNativeStackNavigator();
         <Stack.Screen name="Signup" component={Signup} options={{ headerShown: false }} />
         <Stack.Screen name="Home" component={BottomTabs} options={{ headerShown: false }} />
         <Stack.Screen name="AdminLogin" component={AdminLogin} options={{ headerShown: false }} />
+        <Stack.Screen name="AdminSignup" component={AdminSignup} options={{ headerShown: false }} />
       </Stack.Navigator>
     </NavigationContainer>
   )
