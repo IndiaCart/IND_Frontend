@@ -12,18 +12,23 @@ import {
     Platform
 } from 'react-native';
 import { CustomColor } from '../design/Color';
+import Icon from 'react-native-vector-icons/Feather';
 
 const Login = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
-    const [loginType, setLoginType] = useState('phone');
-    const [credentials, setCredentials] = useState({ loginId: '', password: '' });
-    const [showPassword, setShowPassword] = useState(false);
-    const [rememberMe, setRememberMe] = useState(true);
     const isDark = theme.mode === "dark";
 
+    // State variables for login
+    const [loginType, setLoginType] = useState('phone');
+    const [credentials, setCredentials] = useState({ loginId: '', password: '', otp: '' });
+    const [showPassword, setShowPassword] = useState(false);
+    const [rememberMe, setRememberMe] = useState(true);
+    const [isOTPLogin, setIsOTPLogin] = useState(false);
+    
+
     // Update input field values
-    const handleChange = (name, value) => {
-        setCredentials({ ...credentials, [name]: value });
+    const handleChange = (key, value) => {
+        setCredentials({ ...credentials, [key]: value });
     };
 
     // Dummy login handler
@@ -46,6 +51,7 @@ const Login = ({ navigation }) => {
             </Text>
 
             <View style={styles.loginSection}>
+
                 {/* Login ID Input */}
                 <TextInput
                     placeholder={loginType === 'phone' ? 'Phone Number' : 'Email'}
@@ -66,28 +72,45 @@ const Login = ({ navigation }) => {
                 />
 
                 {/* Password Input with Toggle */}
-                <View
-                    style={[
-                        styles.passwordRow,
-                        {
-                            backgroundColor: theme.inputBackground,
-                            borderColor: isDark ? 'transparent' : '#ccc',
-                            borderWidth: isDark ? 0 : 1,
-                            ...(!isDark ? styles.lightShadow : {})
-                        },
-                    ]}
-                >
-                    <TextInput
-                        placeholder="Password"
-                        placeholderTextColor={theme.placeholder || '#999'}
-                        style={[styles.passwordInput, { color: theme.text }]}
-                        secureTextEntry={!showPassword}
-                        value={credentials.password}
-                        onChangeText={(text) => handleChange('password', text)}
-                    />
-                    <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                        <Text style={styles.eyeIcon}>{showPassword ? '🙈' : '👁️'}</Text>
-                    </TouchableOpacity>
+                <View style={styles.passwordContainer}>
+                    {isOTPLogin ? (
+                        <View style={styles.otpWrapper}>
+                            <TextInput
+                                placeholder="OTP"
+                                placeholderTextColor={theme.placeholder || '#999'}
+                                style={[styles.otpInput, { color: theme.text }]}
+                                keyboardType="numeric"
+                                value={credentials.otp}
+                                onChangeText={(text) => handleChange('otp', text)}
+                            />
+                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                                <Icon
+                                    name={showPassword ? 'eye-off' : 'eye'}
+                                    size={20}
+                                    color={theme.text}
+                                />
+                            </TouchableOpacity>
+                        </View>
+
+                    ) : (
+                        <View style={styles.passwordWrapper}>
+                            <TextInput
+                                placeholder="Password"
+                                placeholderTextColor={theme.placeholder || '#999'}
+                                style={[styles.passwordInput, { color: theme.text }]}
+                                secureTextEntry={!showPassword}
+                                value={credentials.password}
+                                onChangeText={(text) => handleChange('password', text)}
+                            />
+                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                                <Icon
+                                    name={showPassword ? 'eye-off' : 'eye'}
+                                    size={20}
+                                    color={theme.text}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    )}
                 </View>
 
                 {/* Remember Me + Forgot Password */}
@@ -123,8 +146,8 @@ const Login = ({ navigation }) => {
                 {/* OTP Login Option */}
                 <View style={styles.loginOptionContainer}>
                     <Text style={styles.orText}>Or Login with</Text>
-                    <TouchableOpacity>
-                        <Text style={styles.OTPText}> OTP</Text>
+                    <TouchableOpacity onPress={() => setIsOTPLogin(!isOTPLogin)}>
+                        <Text style={styles.OTPText}>{isOTPLogin ? 'Password' : 'OTP'}</Text>
                     </TouchableOpacity>
                 </View>
 
@@ -206,11 +229,7 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         paddingHorizontal: 10,
     },
-    passwordInput: {
-        flex: 1,
-        paddingVertical: 14,
-        fontSize: 16,
-    },
+
     eyeIcon: {
         fontSize: 18,
         marginLeft: 10,
@@ -281,6 +300,42 @@ const styles = StyleSheet.create({
     socialIcon: {
         width: 24,
         height: 24,
+    },
+
+    passwordContainer: {
+        marginBottom: 14,
+    },
+
+    otpWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 14,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        backgroundColor: '#fff',
+    },
+
+    passwordWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 14,
+        borderRadius: 12,
+        borderWidth: 1,
+        borderColor: '#ccc',
+        backgroundColor: '#fff',
+    },
+
+    otpInput: {
+        flex: 1,
+        paddingVertical: 14,
+        fontSize: 16,
+    },
+
+    passwordInput: {
+        flex: 1,
+        paddingVertical: 14,
+        fontSize: 16,
     },
     lightShadow: {
         ...Platform.select({
