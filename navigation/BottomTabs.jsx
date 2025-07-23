@@ -1,10 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-// import { Ionicons } from  'react-native-vector-icons/Ionicons'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
-// import ProfileScreen from '../Screens/ProfileScreen';
+
 import HomeScreen from '../Screens/HomeScreen';
 import ProfileStack from './ProfileStack';
+
+
 
 const Tab = createBottomTabNavigator();
 
@@ -15,15 +17,37 @@ const BottomTabs = () => {
         headerShown: false,
         tabBarIcon: ({ color, size }) => {
           let iconName;
-          if (route.name === 'Home') iconName = 'home-outline';
-          else if (route.name === 'Profile') iconName = 'person-outline';
-          else if (route.name === 'Settings') iconName = 'settings-outline';
+
+          switch (route.name) {
+            case 'Shope':
+              iconName = 'store';
+              break;
+            case 'Orders':
+              iconName = 'shopping-bag';
+              break;
+            case 'Customers':
+              iconName = 'users';
+              break;
+            case 'Admin':
+              iconName = 'user-shield';
+              break;
+            case 'Profile':
+              iconName = 'user-circle';
+              break;
+            default:
+              iconName = 'circle';
+          }
+
+          return <FontAwesome5 name={iconName} size={size} color={color} solid />;
         },
         tabBarActiveTintColor: '#6200ee',
         tabBarInactiveTintColor: 'gray',
       })}
     >
-      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Shope" component={HomeScreen} />
+      <Tab.Screen name="Orders" component={ProfileStack} />
+      <Tab.Screen name="Customers" component={ProfileStack} />
+      <Tab.Screen name="Admin" component={ProfileStack} />
       <Tab.Screen name="Profile" component={ProfileStack} />
     </Tab.Navigator>
   );

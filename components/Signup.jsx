@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import { ThemeContext } from '../design/ThemeContext';
 import { CustomColor } from '../design/Color';
-import Fether from 'react-native-vector-icons/Feather';
+import Feather from 'react-native-vector-icons/Feather';
 
 const Signup = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
