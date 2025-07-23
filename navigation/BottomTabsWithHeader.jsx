@@ -1,57 +1,25 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
     View,
-    TextInput,
     TouchableOpacity,
+    TextInput,
     StyleSheet,
     Text,
     Platform,
 } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/Feather';
 import BottomTabs from './BottomTabs';
 import { ThemeContext } from '../design/ThemeContext';
 
-const Stack = createStackNavigator();
-
-// Search Screen Placeholder
 const SearchScreen = () => (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
         <Text>Search Screen</Text>
     </View>
 );
 
-// Header Search Component
-const HeaderSearch = ({ navigation }) => {
-    const { theme } = useContext(ThemeContext);
-    const [showSearch, setShowSearch] = useState(false);
+const Stack = createStackNavigator();
 
-    return (
-        <View style={[styles.searchContainer, { backgroundColor: theme.card }]}>
-            <TouchableOpacity onPress={() => setShowSearch(true)}>
-                <Icon
-                    name="search"
-                    size={20}
-                    color={theme.placeholder || '#888'}
-                    style={styles.icon}
-                />
-            </TouchableOpacity>
-
-            {showSearch && (
-                <TextInput
-                    placeholder="Search"
-                    placeholderTextColor={theme.placeholder || '#888'}
-                    style={[styles.searchInput, { color: theme.text }]}
-                    autoFocus
-                    onFocus={() => navigation.navigate('Search')}
-                    onBlur={() => setShowSearch(false)}
-                />
-            )}
-        </View>
-    );
-};
-
-// 📱 Main Navigator with Custom Header
 const BottomTabsWithHeader = () => {
     const { theme, toggleTheme } = useContext(ThemeContext);
 
@@ -61,7 +29,25 @@ const BottomTabsWithHeader = () => {
                 name="Main"
                 component={BottomTabs}
                 options={({ navigation }) => ({
-                    headerTitle: () => <HeaderSearch navigation={navigation} />,
+                    headerTitle: () => (
+                        <View style={[styles.searchContainer, { backgroundColor: theme.card }]}>
+                            <Icon
+                                name="search"
+                                size={20}
+                                color={theme.placeholder || '#888'}
+                                style={styles.icon}
+                                onPress={() => {
+                                    <TextInput
+                                        placeholder="Search"
+                                        placeholderTextColor={theme.placeholder || '#888'}
+                                        style={[styles.searchInput, { color: theme.text }]}
+                                        onFocus={() => navigation.navigate('Search')}
+                                    />
+                                }}
+                            />
+
+                        </View>
+                    ),
                     headerLeft: () => (
                         <TouchableOpacity
                             style={{ marginLeft: 15 }}
@@ -87,7 +73,7 @@ const BottomTabsWithHeader = () => {
                 })}
             />
 
-            {/* Search Screen */}
+            {/* Add Search screen route */}
             <Stack.Screen
                 name="Search"
                 component={SearchScreen}
@@ -104,25 +90,12 @@ const BottomTabsWithHeader = () => {
     );
 };
 
-export default BottomTabsWithHeader;
-
 const styles = StyleSheet.create({
-    searchContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        borderRadius: 8,
-        paddingHorizontal: 10,
-        paddingVertical: Platform.OS === 'ios' ? 6 : 4,
-        marginHorizontal: 10,
-        maxWidth: 300,
-    },
-    icon: {
-        marginRight: 8,
-    },
     searchInput: {
         flex: 1,
         height: Platform.OS === 'ios' ? 30 : 36,
         fontSize: 14,
+        paddingVertical: 0,
         paddingHorizontal: 8,
     },
     headerRight: {
@@ -130,8 +103,19 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginRight: 10,
     },
+    searchContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 8,
+        paddingHorizontal: 10,
+        paddingVertical: Platform.OS === 'ios' ? 6 : 4,
+        flex: 1,
+        marginHorizontal: 10,
+        maxWidth: 300,
+    },
+    icon: {
+        marginLeft: 8,
+    },
 });
 
-
-
-
+export default BottomTabsWithHeader;
