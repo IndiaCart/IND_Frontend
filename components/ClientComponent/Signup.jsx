@@ -1,4 +1,5 @@
 import React, { useContext, useState } from 'react';
+import { Eye ,EyeOff } from 'lucide-react-native';
 import {
   View,
   Text,
@@ -11,7 +12,6 @@ import {
 } from 'react-native';
 import { ThemeContext } from '../../design/ThemeContext';
 import { CustomColor } from '../../design/Color';
-// import Feather from '@react-native-vector-icons/Feather';
 
 
 const Signup = ({ navigation }) => {
@@ -149,11 +149,8 @@ const Signup = ({ navigation }) => {
             ]}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            {/* <Feather
-              name={showPassword ? 'eye' : 'eye-off'}
-              size={22}
-              color={theme === 'dark' ? CustomColor.white : CustomColor.black}
-            /> */}
+           { showPassword ?<Eye color={theme.text} size={24} />:
+                                           <EyeOff color={theme.text} size={24} />}
           </TouchableOpacity>
         </View>
         <Text style={styles.dummyText}>Minimum length is 8 characters</Text>

@@ -1,5 +1,6 @@
 import { ThemeContext } from '../../design/ThemeContext';
 import React, { useContext, useState } from 'react';
+import { Eye ,EyeOff } from 'lucide-react-native';
 import {
     View,
     Text,
@@ -12,7 +13,6 @@ import {
     Platform
 } from 'react-native';
 import { CustomColor } from '../../design/Color';
-// import Feather from '@react-native-vector-icons/Feather';
 
 
 const AdminLogin = ({ navigation }) => {
@@ -80,11 +80,8 @@ const AdminLogin = ({ navigation }) => {
                                 onChangeText={(text) => handleChange('otp', text)}
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                <Icon
-                                    name={showPassword ? 'eye' : 'eye-off'}
-                                    size={20}
-                                    color={theme.text}
-                                />
+                                { showPassword ?<Eye color={theme.text} size={24} />:
+                                                                <EyeOff color={theme.text} size={24} />}
                             </TouchableOpacity>
                         </View>
 
@@ -99,11 +96,8 @@ const AdminLogin = ({ navigation }) => {
                                 onChangeText={(text) => handleChange('password', text)}
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                <Icon
-                                    name={showPassword ? 'eye' : 'eye-off'}
-                                    size={20}
-                                    color={theme.text}
-                                />
+                               { showPassword ?<Eye color={theme.text} size={24} />:
+                                                               <EyeOff color={theme.text} size={24} />}
                             </TouchableOpacity>
                         </View>
                     )}
