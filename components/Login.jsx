@@ -85,7 +85,7 @@ const Login = ({ navigation }) => {
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                                 <Icon
-                                    name={showPassword ? 'eye-off' : 'eye'}
+                                    name={showPassword ? 'eye' : 'eye-off'}
                                     size={20}
                                     color={theme.text}
                                 />
@@ -104,7 +104,7 @@ const Login = ({ navigation }) => {
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                                 <Icon
-                                    name={showPassword ? 'eye-off' : 'eye'}
+                                    name={showPassword ? 'eye' : 'eye-off'}
                                     size={20}
                                     color={theme.text}
                                 />
