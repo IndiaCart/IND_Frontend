@@ -50,5 +50,4 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
-<string>FontAwesome.ttf</string>
 </plist>

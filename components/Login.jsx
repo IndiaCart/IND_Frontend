@@ -78,7 +78,14 @@ const Login = ({ navigation }) => {
                             <TextInput
                                 placeholder="OTP"
                                 placeholderTextColor={theme.placeholder || '#999'}
-                                style={[styles.otpInput, { color: theme.text }]}
+                                style={[ styles.input,
+                                    {
+                                        backgroundColor: theme.inputBackground,
+                                        color: theme.text,
+                                        borderColor: isDark ? 'transparent' : '#ccc',
+                                        borderWidth: isDark ? 0 : 1,
+                                        ...(!isDark ? styles.lightShadow : {})
+                                    },]}
                                 keyboardType="numeric"
                                 value={credentials.otp}
                                 onChangeText={(text) => handleChange('otp', text)}
@@ -97,12 +104,19 @@ const Login = ({ navigation }) => {
                             <TextInput
                                 placeholder="Password"
                                 placeholderTextColor={theme.placeholder || '#999'}
-                                style={[styles.passwordInput, { color: theme.text }]}
+                                style={[ styles.input,
+                                        {   width:"100%",
+                                            backgroundColor: theme.inputBackground,
+                                            color: theme.text,
+                                            borderColor: isDark ? 'transparent' : '#ccc',
+                                            borderWidth: isDark ? 0 : 1,
+                                            ...(!isDark ? styles.lightShadow : {})
+                                        },]}
                                 secureTextEntry={!showPassword}
                                 value={credentials.password}
                                 onChangeText={(text) => handleChange('password', text)}
                             />
-                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
+                            <TouchableOpacity style={{position:"absolute" , right:14, top:14}} onPress={() => setShowPassword(!showPassword)}>
                                 <Icon
                                     name={showPassword ? 'eye' : 'eye-off'}
                                     size={20}
@@ -318,12 +332,7 @@ const styles = StyleSheet.create({
 
     passwordWrapper: {
         flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 14,
-        borderRadius: 12,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        backgroundColor: '#fff',
+        position:"relative"
     },
 
     otpInput: {
