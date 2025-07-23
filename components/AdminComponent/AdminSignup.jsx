@@ -150,7 +150,7 @@ const AdminSignup = ({ navigation }) => {
                     />
                     <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
                         <Feather
-                            name={showPassword ? 'eye-off' : 'eye'}
+                            name={showPassword ? 'eye' : 'eye-off'}
                             size={22}
                             color={theme === 'dark' ? CustomColor.white : CustomColor.black}
                         />
