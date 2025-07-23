@@ -3,15 +3,19 @@ import { StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
 import App from './App';
 import { ThemeProvider, ThemeContext } from './design/ThemeContext';
+import { Provider } from 'react-redux';
+import store from './Redux/Store';
 
 const Main = () => {
   return (
     <SafeAreaProvider>
-      <ThemeProvider>
-        <ThemedWrapper>
-          <App />
-        </ThemedWrapper>
-      </ThemeProvider>
+      <Provider store={store}>
+        <ThemeProvider>
+          <ThemedWrapper>
+            <App />
+          </ThemedWrapper>
+        </ThemeProvider>
+      </Provider>
     </SafeAreaProvider>
   );
 };

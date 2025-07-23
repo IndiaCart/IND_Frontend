@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 
-import HomeScreen from '../Screens/HomeScreen';
+import HomeScreen from '../../Screens/AdminScreen/HomeScreen';
 import ProfileStack from './ProfileStack';
 
 

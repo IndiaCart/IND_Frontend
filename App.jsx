@@ -12,7 +12,6 @@ const App = () => {
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
       <AppNavigation />
-
     </>
   );
 };

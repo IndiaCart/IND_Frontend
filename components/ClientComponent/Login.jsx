@@ -1,4 +1,4 @@
-import { ThemeContext } from '../design/ThemeContext';
+import { ThemeContext } from '../../design/ThemeContext';
 import React, { useContext, useState } from 'react';
 import {
     View,
@@ -11,13 +11,16 @@ import {
     Image,
     Platform
 } from 'react-native';
-import { CustomColor } from '../design/Color';
-import Icon from 'react-native-vector-icons/Feather';
+import { CustomColor } from '../../design/Color';
+// import Icon from 'react-native-vector-icons/Feather';
+import { useSelector } from 'react-redux';
 
 const Login = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
     const isDark = theme.mode === "dark";
+    const {userData} = useSelector((state)=> state.user);
 
+    console.log("userData=>", userData)
     // State variables for login
     const [loginType, setLoginType] = useState('phone');
     const [credentials, setCredentials] = useState({ loginId: '', password: '', otp: '' });
@@ -33,8 +36,7 @@ const Login = ({ navigation }) => {
 
     // Dummy login handler
     const handleLogin = () => {
-        Alert.alert('Success', 'Login successful!');
-        navigation.navigate('Home');
+        navigation.navigate('MainTabs');
     };
 
     return (
@@ -91,11 +93,11 @@ const Login = ({ navigation }) => {
                                 onChangeText={(text) => handleChange('otp', text)}
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                <Icon
+                                {/* <Icon
                                     name={showPassword ? 'eye' : 'eye-off'}
                                     size={20}
                                     color={theme.text}
-                                />
+                                /> */}
                             </TouchableOpacity>
                         </View>
 
@@ -117,11 +119,11 @@ const Login = ({ navigation }) => {
                                 onChangeText={(text) => handleChange('password', text)}
                             />
                             <TouchableOpacity style={{position:"absolute" , right:14, top:14}} onPress={() => setShowPassword(!showPassword)}>
-                                <Icon
+                                {/* <Icon
                                     name={showPassword ? 'eye' : 'eye-off'}
                                     size={20}
                                     color={theme.text}
-                                />
+                                /> */}
                             </TouchableOpacity>
                         </View>
                     )}
@@ -168,13 +170,13 @@ const Login = ({ navigation }) => {
                 {/* Social Media Login */}
                 <View style={styles.socialRow}>
                     <TouchableOpacity style={styles.iconButton}>
-                        <Image source={require('../assets/google.png')} style={styles.socialIcon} />
+                        <Image source={require('../../assets/google.png')} style={styles.socialIcon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton}>
-                        <Image source={require('../assets/mac-os.png')} style={styles.socialIcon} />
+                        <Image source={require('../../assets/mac-os.png')} style={styles.socialIcon} />
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.iconButton}>
-                        <Image source={require('../assets/windows-10.png')} style={styles.socialIcon} />
+                        <Image source={require('../../assets/windows-10.png')} style={styles.socialIcon} />
                     </TouchableOpacity>
                 </View>
 

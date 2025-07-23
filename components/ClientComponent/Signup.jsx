@@ -9,9 +9,10 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import { ThemeContext } from '../design/ThemeContext';
-import { CustomColor } from '../design/Color';
-import Feather from 'react-native-vector-icons/Feather';
+import { ThemeContext } from '../../design/ThemeContext';
+import { CustomColor } from '../../design/Color';
+// import Feather from '@react-native-vector-icons/Feather';
+
 
 const Signup = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
@@ -26,7 +27,6 @@ const Signup = ({ navigation }) => {
   };
 
   const handleSignup = () => {
-    Alert.alert('Success', 'Signup successful!');
     navigation.navigate('Home');
   };
 
@@ -46,13 +46,13 @@ const Signup = ({ navigation }) => {
       {/* Social Login */}
       <View style={styles.socialRow}>
         <TouchableOpacity style={styles.iconButton}>
-          <Image source={require('../assets/google.png')} style={styles.socialIcon} />
+          <Image source={require('../../assets/google.png')} style={styles.socialIcon} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconButton}>
-          <Image source={require('../assets/mac-os.png')} style={styles.socialIcon} />
+          <Image source={require('../../assets/mac-os.png')} style={styles.socialIcon} />
         </TouchableOpacity>
         <TouchableOpacity style={styles.iconButton}>
-          <Image source={require('../assets/windows-10.png')} style={styles.socialIcon} />
+          <Image source={require('../../assets/windows-10.png')} style={styles.socialIcon} />
         </TouchableOpacity>
       </View>
 
@@ -149,11 +149,11 @@ const Signup = ({ navigation }) => {
             ]}
           />
           <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-            <Feather
+            {/* <Feather
               name={showPassword ? 'eye' : 'eye-off'}
               size={22}
               color={theme === 'dark' ? CustomColor.white : CustomColor.black}
-            />
+            /> */}
           </TouchableOpacity>
         </View>
         <Text style={styles.dummyText}>Minimum length is 8 characters</Text>

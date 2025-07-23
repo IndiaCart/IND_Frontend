@@ -11,7 +11,8 @@ import {
 } from 'react-native';
 import { ThemeContext } from '../../design/ThemeContext';
 import { CustomColor } from '../../design/Color';
-import Feather from 'react-native-vector-icons/Feather';
+// import Feather from '@react-native-vector-icons/Feather';
+
 
 const AdminSignup = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
@@ -149,11 +150,11 @@ const AdminSignup = ({ navigation }) => {
                         ]}
                     />
                     <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                        <Feather
+                        {/* <Feather
                             name={showPassword ? 'eye' : 'eye-off'}
                             size={22}
                             color={theme === 'dark' ? CustomColor.white : CustomColor.black}
-                        />
+                        /> */}
                     </TouchableOpacity>
                 </View>
                 <Text style={styles.dummyText}>Minimum length is 8 characters</Text>

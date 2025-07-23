@@ -12,7 +12,8 @@ import {
     Platform
 } from 'react-native';
 import { CustomColor } from '../../design/Color';
-import Icon from 'react-native-vector-icons/Feather';
+// import Feather from '@react-native-vector-icons/Feather';
+
 
 const AdminLogin = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
