@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useContext } from 'react';
-import { ThemeContext } from '../design/ThemeContext';
-import Login from '../components/Login';
+import { ThemeContext } from '../../design/ThemeContext';
 
 const HomeScreen = () => {
   const { theme } = useContext(ThemeContext);

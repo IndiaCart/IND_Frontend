@@ -13,42 +13,49 @@ import {
     Platform
 } from 'react-native';
 import { CustomColor } from '../../design/Color';
+// import Icon from 'react-native-vector-icons/Feather';
+import { useSelector } from 'react-redux';
 
-
-const AdminLogin = ({ navigation }) => {
+const Login = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
     const isDark = theme.mode === "dark";
+    const {userData} = useSelector((state)=> state.user);
 
+    console.log("userData=>", userData)
+    // State variables for login
     const [loginType, setLoginType] = useState('phone');
     const [credentials, setCredentials] = useState({ loginId: '', password: '', otp: '' });
     const [showPassword, setShowPassword] = useState(false);
     const [rememberMe, setRememberMe] = useState(true);
     const [isOTPLogin, setIsOTPLogin] = useState(false);
+    
 
-    // Handle input changes
+    // Update input field values
     const handleChange = (key, value) => {
         setCredentials({ ...credentials, [key]: value });
     };
 
     // Dummy login handler
     const handleLogin = () => {
-        Alert.alert('Success', 'Login successful!');
-        navigation.navigate('Home');
+        navigation.navigate('MainTabs');
     };
 
     return (
-        <View style={[
-            styles.container,
-            { backgroundColor: isDark ? theme.background : CustomColor.GREY_10 }
-        ]}>
+        <View
+            style={[
+                styles.container,
+                { backgroundColor: isDark ? theme.background : CustomColor.GREY_10 }
+            ]}
+        >
             {/* Title */}
             <Text style={[styles.title, { color: theme.text }]}>
-                Admin Log in to Your{'\n'}
+                Log in to Your{'\n'}
                 <Text style={{ fontWeight: 'bold' }}>IndiaCart Account!</Text>
             </Text>
 
             <View style={styles.loginSection}>
-                {/* Login ID input (phone/email) */}
+
+                {/* Login ID Input */}
                 <TextInput
                     placeholder={loginType === 'phone' ? 'Phone Number' : 'Email'}
                     keyboardType={loginType === 'phone' ? 'phone-pad' : 'email-address'}
@@ -61,12 +68,11 @@ const AdminLogin = ({ navigation }) => {
                             borderColor: isDark ? 'transparent' : '#ccc',
                             borderWidth: isDark ? 0 : 1,
                             ...(!isDark ? styles.lightShadow : {})
-                        }
+                        },
                     ]}
                     value={credentials.loginId}
                     onChangeText={(text) => handleChange('loginId', text)}
                 />
-
                 {/* Password Input with Toggle */}
                 <View style={styles.passwordContainer}>
                     {isOTPLogin ? (
@@ -74,14 +80,21 @@ const AdminLogin = ({ navigation }) => {
                             <TextInput
                                 placeholder="OTP"
                                 placeholderTextColor={theme.placeholder || '#999'}
-                                style={[styles.otpInput, { color: theme.text }]}
+                                style={[ styles.input,
+                                    {
+                                        backgroundColor: theme.inputBackground,
+                                        color: theme.text,
+                                        borderColor: isDark ? 'transparent' : '#ccc',
+                                        borderWidth: isDark ? 0 : 1,
+                                        ...(!isDark ? styles.lightShadow : {})
+                                    },]}
                                 keyboardType="numeric"
                                 value={credentials.otp}
                                 onChangeText={(text) => handleChange('otp', text)}
                             />
                             <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                                { showPassword ?<Eye color={theme.text} size={24} />:
-                                                                <EyeOff color={theme.text} size={24} />}
+                              { showPassword ?<Eye color={theme.text} size={24} />:
+                                <EyeOff color={theme.text} size={24} />}
                             </TouchableOpacity>
                         </View>
 
@@ -90,41 +103,50 @@ const AdminLogin = ({ navigation }) => {
                             <TextInput
                                 placeholder="Password"
                                 placeholderTextColor={theme.placeholder || '#999'}
-                                style={[styles.passwordInput, { color: theme.text }]}
+                                style={[ styles.input,
+                                        {   width:"100%",
+                                            backgroundColor: theme.inputBackground,
+                                            color: theme.text,
+                                            borderColor: isDark ? 'transparent' : '#ccc',
+                                            borderWidth: isDark ? 0 : 1,
+                                            ...(!isDark ? styles.lightShadow : {})
+                                        },]}
                                 secureTextEntry={!showPassword}
                                 value={credentials.password}
                                 onChangeText={(text) => handleChange('password', text)}
                             />
-                            <TouchableOpacity onPress={() => setShowPassword(!showPassword)}>
-                               { showPassword ?<Eye color={theme.text} size={24} />:
-                                                               <EyeOff color={theme.text} size={24} />}
+                            <TouchableOpacity style={{position:"absolute" , right:14, top:14}} onPress={() => setShowPassword(!showPassword)}>
+                                { showPassword ?<Eye color={theme.text} size={24} />:
+                                <EyeOff color={theme.text} size={24} />}
                             </TouchableOpacity>
                         </View>
                     )}
                 </View>
 
-                {/* Remember Me & Forgot Password */}
+                {/* Remember Me + Forgot Password */}
                 <View style={styles.optionsRow}>
                     <View style={styles.rememberMe}>
                         <Switch
                             value={rememberMe}
                             onValueChange={() => setRememberMe(!rememberMe)}
-                            thumbColor={rememberMe ? '#2563eb' : '#ccc'}
+                            thumbColor={rememberMe ? '#ffffff' : '#f4f3f4'}
                             trackColor={{ false: '#d1d1d1', true: "#2563eb" }}
                         />
-                        <Text style={[styles.rememberText, { color: theme.text }]}>Remember Me</Text>
+                        <Text style={[styles.rememberText, { color: theme.text }]}>
+                            Remember Me
+                        </Text>
                     </View>
                     <TouchableOpacity>
-                        <Text style={styles.forgotPassword}>Forgot Password?</Text>
+                        <Text style={[styles.forgotPassword]}>Forgot Password?</Text>
                     </TouchableOpacity>
                 </View>
 
-                {/* Login button */}
+                {/* Login Button */}
                 <TouchableOpacity
                     style={[
                         styles.loginButton,
                         !isDark && styles.lightShadow,
-                        { backgroundColor: CustomColor.CYAN_80 }
+                        { backgroundColor: CustomColor.ORANGE_60 }
                     ]}
                     onPress={handleLogin}
                 >
@@ -139,7 +161,7 @@ const AdminLogin = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Social login icons */}
+                {/* Social Media Login */}
                 <View style={styles.socialRow}>
                     <TouchableOpacity style={styles.iconButton}>
                         <Image source={require('../../assets/google.png')} style={styles.socialIcon} />
@@ -157,25 +179,25 @@ const AdminLogin = ({ navigation }) => {
                     Don’t have an account?{' '}
                     <Text
                         style={styles.signupLink}
-                        onPress={() => navigation.navigate('AdminSignup')}
+                        onPress={() => navigation.navigate('Signup')}
                     >
                         Sign Up
                     </Text>
                 </Text>
 
-                {/* Navigation to user login/signup */}
+                {/* Admin Prompt */}
                 <Text style={[styles.signupPrompt, { color: theme.text, marginTop: 12 }]}>
-                    User?{' '}
+                    Admin?{' '}
                     <Text
                         style={styles.signupLink}
-                        onPress={() => navigation.navigate('Login')}
+                        onPress={() => navigation.navigate('AdminLogin')}
                     >
                         Log In
                     </Text>{' '}
                     |{' '}
                     <Text
                         style={styles.signupLink}
-                        onPress={() => navigation.navigate('Signup')}
+                        onPress={() => navigation.navigate('AdminSignup')}
                     >
                         Sign Up
                     </Text>
@@ -185,7 +207,7 @@ const AdminLogin = ({ navigation }) => {
     );
 };
 
-export default AdminLogin;
+export default Login;
 
 // ==========================
 // Styles
@@ -217,11 +239,7 @@ const styles = StyleSheet.create({
         marginBottom: 14,
         paddingHorizontal: 10,
     },
-    passwordInput: {
-        flex: 1,
-        paddingVertical: 14,
-        fontSize: 16,
-    },
+
     eyeIcon: {
         fontSize: 18,
         marginLeft: 10,
@@ -293,6 +311,7 @@ const styles = StyleSheet.create({
         width: 24,
         height: 24,
     },
+
     passwordContainer: {
         marginBottom: 14,
     },
@@ -309,12 +328,7 @@ const styles = StyleSheet.create({
 
     passwordWrapper: {
         flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 14,
-        borderRadius: 12,
-        borderWidth: 1,
-        borderColor: '#ccc',
-        backgroundColor: '#fff',
+        position:"relative"
     },
 
     otpInput: {
@@ -328,7 +342,6 @@ const styles = StyleSheet.create({
         paddingVertical: 14,
         fontSize: 16,
     },
-
     lightShadow: {
         ...Platform.select({
             ios: {
