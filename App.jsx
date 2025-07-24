@@ -7,7 +7,6 @@ const App = () => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme.mode === 'dark';
 
-  console.log(theme)
   return (
     <>
       <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />

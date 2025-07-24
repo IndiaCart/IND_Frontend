@@ -2,7 +2,8 @@ import { createReducer } from "@reduxjs/toolkit";
 
 const initialState = {
   loading:false,
-  userData:["akash"]
+  userData:["akash"],
+  currentLoginType:"user"
 }
 
 export const userReducer = createReducer(initialState, (builder) => {
@@ -15,5 +16,8 @@ export const userReducer = createReducer(initialState, (builder) => {
     .addCase("LOGOUT_USER_STATUS", (state , action) => {
       state.loading = false;
       state.userData = action.payload;
+    })
+    .addCase("SET_LOGIN_TYPE", (state , action) => {
+      state.currentLoginType = action.payload;
     })
 });

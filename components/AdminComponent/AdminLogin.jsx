@@ -13,12 +13,13 @@ import {
     Platform
 } from 'react-native';
 import { CustomColor } from '../../design/Color';
+import { useDispatch } from 'react-redux';
 
 
 const AdminLogin = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
     const isDark = theme.mode === "dark";
-
+    const dispatch = useDispatch();
     const [loginType, setLoginType] = useState('phone');
     const [credentials, setCredentials] = useState({ loginId: '', password: '', otp: '' });
     const [showPassword, setShowPassword] = useState(false);
@@ -32,8 +33,7 @@ const AdminLogin = ({ navigation }) => {
 
     // Dummy login handler
     const handleLogin = () => {
-        Alert.alert('Success', 'Login successful!');
-        navigation.navigate('Home');
+        navigation.navigate('AdminChannel');
     };
 
     return (
@@ -152,32 +152,14 @@ const AdminLogin = ({ navigation }) => {
                     </TouchableOpacity>
                 </View>
 
-                {/* Signup Prompt */}
-                <Text style={[styles.signupPrompt, { color: theme.text }]}>
-                    Don’t have an account?{' '}
-                    <Text
-                        style={styles.signupLink}
-                        onPress={() => navigation.navigate('AdminSignup')}
-                    >
-                        Sign Up
-                    </Text>
-                </Text>
-
                 {/* Navigation to user login/signup */}
                 <Text style={[styles.signupPrompt, { color: theme.text, marginTop: 12 }]}>
-                    User?{' '}
+                    User ?{' '}
                     <Text
                         style={styles.signupLink}
-                        onPress={() => navigation.navigate('Login')}
+                        onPress={() => {navigation.navigate('Login'),  dispatch({type:"SET_LOGIN_TYPE", payload:"user"})}}
                     >
                         Log In
-                    </Text>{' '}
-                    |{' '}
-                    <Text
-                        style={styles.signupLink}
-                        onPress={() => navigation.navigate('Signup')}
-                    >
-                        Sign Up
                     </Text>
                 </Text>
             </View>

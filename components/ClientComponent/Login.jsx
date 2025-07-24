@@ -14,14 +14,14 @@ import {
 } from 'react-native';
 import { CustomColor } from '../../design/Color';
 // import Icon from 'react-native-vector-icons/Feather';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 const Login = ({ navigation }) => {
     const { theme } = useContext(ThemeContext);
     const isDark = theme.mode === "dark";
-    const {userData} = useSelector((state)=> state.user);
-
-    console.log("userData=>", userData)
+    const {currentLoginType} = useSelector((state)=> state.user);
+    const dispatch = useDispatch();
+    console.log("currentLoginType =>", currentLoginType)
     // State variables for login
     const [loginType, setLoginType] = useState('phone');
     const [credentials, setCredentials] = useState({ loginId: '', password: '', otp: '' });
@@ -187,19 +187,12 @@ const Login = ({ navigation }) => {
 
                 {/* Admin Prompt */}
                 <Text style={[styles.signupPrompt, { color: theme.text, marginTop: 12 }]}>
-                    Admin?{' '}
+                    Admin?
                     <Text
                         style={styles.signupLink}
-                        onPress={() => navigation.navigate('AdminLogin')}
+                        onPress={() => {navigation.navigate('AdminLogin'), dispatch({type:"SET_LOGIN_TYPE", payload:"admin"})}}
                     >
                         Log In
-                    </Text>{' '}
-                    |{' '}
-                    <Text
-                        style={styles.signupLink}
-                        onPress={() => navigation.navigate('AdminSignup')}
-                    >
-                        Sign Up
                     </Text>
                 </Text>
             </View>

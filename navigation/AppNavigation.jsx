@@ -3,35 +3,33 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // Screens
-import MainTabs from './AdminNavigation/MainTab';
-import EditProfile from '../Screens/AdminScreen/EditProfile';
 import Login from '../components/ClientComponent/Login';
 import Signup from '../components/ClientComponent/Signup';
 import AdminLogin from '../components/AdminComponent/AdminLogin';
 import AdminSignup from '../components/AdminComponent/AdminSignup';
+import { useSelector } from 'react-redux';
+import AdminAppNavigation from './AdminNavigation/AdminAppNavigation';
 
 const Stack = createNativeStackNavigator();
 
 const AppNavigation = () => {
-  const [role, setRole] = useState('admin'); // 'admin' | 'user' | null
+  const [role, setRole] = useState(''); // 'admin' | 'user' | null
   const [isAuthenticated, setIsAuthenticated] = useState(true);
-
+  const {currentLoginType} = useSelector((state)=> state.user);
   // Simulate login and role check (replace with real logic)
   const handleLogin = async () => {
-    // Simulate user login and role fetch
-    const fetchedRole = 'admin'; // or 'user'
-    setRole(fetchedRole);
+    setRole(currentLoginType);
     setIsAuthenticated(true);
   };
 
   useEffect(() => {
-
-  }, []);
-
+    handleLogin();
+  }, [currentLoginType]);
+  {console.log(currentLoginType)};
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* Always shown routes */}
+        {/* These routes are avaliable before auth */}
         <Stack.Screen name="Login">
           {(props) => <Login {...props} onLogin={handleLogin} />}
         </Stack.Screen>
@@ -39,13 +37,8 @@ const AppNavigation = () => {
         <Stack.Screen name="AdminLogin" component={AdminLogin} />
         <Stack.Screen name="AdminSignup" component={AdminSignup} />
 
-        {/* Conditionally render post-login routes */}
-        {isAuthenticated && role === 'admin' && (
-          <>
-            <Stack.Screen name="MainTabs" component={MainTabs} />
-            <Stack.Screen name="EditProfile" component={EditProfile} />
-          </>
-        )}
+        {/* Conditionally render post-login routes for Admin*/}
+        {isAuthenticated && role == 'admin' && <Stack.Screen name="AdminChannel" component={AdminAppNavigation} />}
 
         {/* You can add user routes here later like: */}
             {/* {isAuthenticated && role === 'user' && (
