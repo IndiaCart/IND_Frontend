@@ -1,11 +1,18 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { StatusBar } from 'react-native';
 import AppNavigation from './navigation/AppNavigation';
 import { ThemeContext } from './design/ThemeContext';
+import { useSelector } from 'react-redux';
 
 const App = () => {
   const { theme } = useContext(ThemeContext);
   const isDarkMode = theme.mode === 'dark';
+  const {userData ,isAuthenticated , loading} = useSelector((state)=> state.user);
+useEffect(()=>{
+    console.log("userData =>", userData)
+    console.log("loading =>", loading)
+    console.log("isAuthenticated =>", isAuthenticated)
+},[userData ,loading , isAuthenticated])
 
   return (
     <>

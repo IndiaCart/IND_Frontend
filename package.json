@@ -7,9 +7,13 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest",
+    "restart-android": "adb shell am force-stop com.indiacart && adb shell monkey -p com.indiacart -c android.intent.category.LAUNCHER 1",
+    "restart-ios": "xcrun simctl terminate booted org.reactjs.native.example.IndiaCart && xcrun simctl launch booted org.reactjs.native.example.IndiaCart"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^2.2.0",
+    "@react-native-google-signin/google-signin": "^15.0.0",
     "@react-native-vector-icons/feather": "^12.2.0",
     "@react-native/new-app-screen": "0.80.1",
     "@react-navigation/bottom-tabs": "^7.4.2",
@@ -17,7 +21,9 @@
     "@react-navigation/native-stack": "^7.3.21",
     "@react-navigation/stack": "^7.4.2",
     "@reduxjs/toolkit": "^2.8.2",
+    "axios": "^1.11.0",
     "lucide-react-native": "^0.525.0",
+    "memoize-one": "^6.0.0",
     "react": "19.1.0",
     "react-native": "0.80.1",
     "react-native-gesture-handler": "^2.27.2",
@@ -27,6 +33,7 @@
     "react-native-svg": "^15.12.0",
     "react-native-vector-icons": "^10.3.0",
     "react-redux": "^9.2.0",
+    "redux-persist": "^6.0.0",
     "socket.io-client": "^4.8.1"
   },
   "devDependencies": {
@@ -46,6 +53,7 @@
     "eslint": "^8.19.0",
     "jest": "^29.6.3",
     "prettier": "2.8.8",
+    "react-native-dotenv": "^3.4.11",
     "react-test-renderer": "19.1.0",
     "typescript": "5.0.4"
   },
