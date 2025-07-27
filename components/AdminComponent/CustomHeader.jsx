@@ -1,31 +1,40 @@
 // components/CustomHeader.js
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
-// import LinearGradient from 'react-native-linear-gradient';
+import React, { useContext } from 'react';
+import { View, Text, StyleSheet, TextInput, Image, TouchableOpacity } from 'react-native';
+import { Search, Grid, ChevronDown } from 'lucide-react-native';
+import { useSelector } from 'react-redux';
+import { ThemeContext } from '../../design/ThemeContext';
+import { CustomColor } from '../../design/Color';
 
-const CustomHeader = ({ title, onSearch }) => {
+const CustomHeader = ({ onSearch }) => {
+  const {userData} = useSelector((state)=> state.user);
+    const { theme } = useContext(ThemeContext);
+  console.log(userData)
   return (
-    <View colors={['#4c669f', '#3b5998']} style={styles.header}>
+    <View style={[styles.container , {backgroundColor:theme.background}]}>
+      {/* Top Row */}
       <View style={styles.topRow}>
-        <Text style={styles.title}>{title}</Text>
+        <View style={{color:theme.text}}>
+          <Text style={[styles.greeting ,{color:theme.text}]}>Hello</Text>
+          <Text style={[styles.username , {color:theme.text}]}>{userData?.user.name}!</Text>
+          <Text style={[styles.subtitle,{color:CustomColor.GREY_50}]}>Keep manage your sales with care.</Text>
+        </View>
 
-        <View style={styles.rightIcons}>
-          <TouchableOpacity onPress={() => console.log('Toggle Theme')}>
-            <Icon name="moon" size={22} color="#fff" style={styles.icon} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log('Notifications')}>
-            <Icon name="bell" size={22} color="#fff" />
-          </TouchableOpacity>
+        <View style={styles.profileGroup}>
+         <Image
+            source={{ uri: userData.user.profilePic }}
+            style={styles.avatar}
+          />
         </View>
       </View>
 
+      {/* Search Bar */}
       <View style={styles.searchContainer}>
-        <Icon name="search" size={18} color="#888" style={styles.searchIcon} />
+        <Search size={18} color="#888" />
         <TextInput
-          placeholder="Search"
-          placeholderTextColor="#888"
           style={styles.searchInput}
+          placeholder="Search anything in..."
+          placeholderTextColor="#999"
           onChangeText={onSearch}
         />
       </View>
@@ -34,53 +43,64 @@ const CustomHeader = ({ title, onSearch }) => {
 };
 
 export default CustomHeader;
-
 const styles = StyleSheet.create({
-  header: {
-    paddingTop: 40,
-    paddingHorizontal: 16,
-    paddingBottom: 12,
-    elevation: 5,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowOffset: { width: 0, height: 4 },
-    shadowRadius: 6,
-    borderBottomLeftRadius: 12,
-    borderBottomRightRadius: 12,
+  container: {
+    paddingTop: 8,
+    paddingHorizontal: 20,
+    paddingBottom: 24,
+    
   },
   topRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 12,
+    alignItems: 'flex-start',
+    marginBottom: 20,
   },
-  title: {
-    fontSize: 22,
+  greeting: {
+    fontSize: 20,
+    fontWeight: '500',
+  },
+  username: {
+    fontSize: 26,
     fontWeight: '700',
-    color: '#fff',
   },
-  rightIcons: {
+  subtitle: {
+    fontSize: 14,
+    fontFamily:"Inter-semibold",
+    marginTop: 4,
+  },
+  profileGroup: {
+    flexDirection:"row",
+    gap:10,
+    alignItems: 'center',
+  },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    marginBottom: 6,
+  },
+  menuButton: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
-  },
-  icon: {
-    marginRight: 8,
+    backgroundColor: '#f0f2f5',
+    borderRadius: 16,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    gap: 4,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#fff',
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    height: 40,
-  },
-  searchIcon: {
-    marginRight: 8,
+    backgroundColor: '#f0f0f0',
+    borderRadius: 12,
+    paddingHorizontal: 14,
+    height: 48,
   },
   searchInput: {
     flex: 1,
-    color: '#333',
+    marginLeft: 10,
     fontSize: 16,
+    color: '#000',
   },
 });

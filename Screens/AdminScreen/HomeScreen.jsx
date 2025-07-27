@@ -6,7 +6,7 @@ const HomeScreen = () => {
   const { theme } = useContext(ThemeContext);
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container,{backgroundColor:theme.background}]}>
        <Text>Wlecome to Home screen</Text>
     </View>
   );

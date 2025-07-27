@@ -15,9 +15,9 @@ const GoogleLogin = async () => {
   const userInfo = await GoogleSignin.signIn();
   return userInfo;
 };
-const dispatch = useDispatch();
 
-export const handleGoogleLogin = async () => {
+
+export const handleGoogleLogin = async (dispatch) => {
   try {
     dispatch({type:"START_LOADING"});
     const response = await GoogleLogin();
@@ -44,7 +44,7 @@ export const handleGoogleLogin = async () => {
   }
 };
 
-export const handleGoogleLogout= async()=> {
+export const handleGoogleLogout= async(dispatch)=> {
 	try {
 		await GoogleSignin.signOut();
 

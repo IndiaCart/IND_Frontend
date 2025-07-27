@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "761828550614",
+    "project_id": "indiacart-650cf",
+    "storage_bucket": "indiacart-650cf.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761828550614:android:059f94544d49cbf3132677",
+        "android_client_info": {
+          "package_name": "com.firebase.indiaCart"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhDBTQjkEkdzydWC-Srv8THnp_WNac_oY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

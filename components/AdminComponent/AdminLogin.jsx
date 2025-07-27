@@ -23,7 +23,6 @@ const OTP_LENGTH = 6;
 
 const AdminLogin = ({ navigation }) => {
   const { theme } = useContext(ThemeContext);
-  const isDark = theme.mode === 'dark';
   const dispatch = useDispatch();
   const [mode, setMode] = useState('password');
   const [loginId, setLoginId] = useState('');

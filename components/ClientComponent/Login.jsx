@@ -48,7 +48,7 @@ const Login = ({ navigation }) => {
   // Login Via Google
   const handleLoginViaGoogle = async () => {
     try {
-      await handleGoogleLogin();
+      await handleGoogleLogin(dispatch);
      
     } catch (err) {
       console.log('Login error:', err.message);

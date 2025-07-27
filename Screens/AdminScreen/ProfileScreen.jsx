@@ -6,13 +6,12 @@ import { handleGoogleLogout } from '../../utils/GoogleLogin';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   const handleLogout = async () => {
     try {
       // Sign out of Google
-      await handleGoogleLogout();
-
+      await handleGoogleLogout(dispatch);
       navigation.dispatch(
         CommonActions.reset({
           index: 0,

@@ -51,6 +51,7 @@ export const CustomColor = {
     GREEN_80: "#178552",
     GREEN_90: "#136A41",
     GREEN_100: "#0D4A2D",
+    GREEN_MUD:"#0A2D1D",
 
     RED_10: "#FAEBEC",
     RED_20: "#F0C2C5",
