@@ -1,56 +1,77 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useSelector } from 'react-redux';
 
-// Screens
+// ========== Public Screens ==========
 import Login from '../components/ClientComponent/Login';
 import Signup from '../components/ClientComponent/Signup';
 import AdminLogin from '../components/AdminComponent/AdminLogin';
 import AdminSignup from '../components/AdminComponent/AdminSignup';
-import { useSelector } from 'react-redux';
+
+// ========== Admin Screens ==========
 import AdminAppNavigation from './AdminNavigation/AdminAppNavigation';
+import UserHome from '../Screens/UserScreen/UserHome';
 
-const Stack = createNativeStackNavigator();
+// ========== User Screens (if any) ==========
+const UserSettings = () => null;
 
-const AppNavigation = () => {
-  const [role, setRole] = useState(''); // 'admin' | 'user' | null
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
-  const {currentLoginType} = useSelector((state)=> state.user);
-  // Simulate login and role check (replace with real logic)
-  const handleLogin = async () => {
-    setRole(currentLoginType);
-    setIsAuthenticated(true);
-  };
+// ========== Navigators ==========
+const PublicStack = createNativeStackNavigator();
+function PublicNavigator() {
+  return (
+    <PublicStack.Navigator screenOptions={{ headerShown: false }}>
+      <PublicStack.Screen name="Login" component={Login} />
+      <PublicStack.Screen name="Signup" component={Signup} />
+      <PublicStack.Screen name="AdminLogin" component={AdminLogin} />
+      <PublicStack.Screen name="AdminSignup" component={AdminSignup} />
+    </PublicStack.Navigator>
+  );
+}
 
-  useEffect(() => {
-    handleLogin();
-  }, [currentLoginType]);
-  {console.log(currentLoginType)};
+const AdminStack = createNativeStackNavigator();
+function AdminNavigator() {
+  return (
+    <AdminStack.Navigator screenOptions={{ headerShown: false }}>
+      <AdminStack.Screen name="AdminChannel" component={AdminAppNavigation} />
+    </AdminStack.Navigator>
+  );
+}
+
+const UserStack = createNativeStackNavigator();
+function UserNavigator() {
+  return (
+    <UserStack.Navigator screenOptions={{ headerShown: false }}>
+      <UserStack.Screen name="UserHome" component={UserHome} />
+      <UserStack.Screen name="UserSettings" component={UserSettings} />
+    </UserStack.Navigator>
+  );
+}
+
+// ========== RootStack ==========
+const RootStack = createNativeStackNavigator();
+
+export default function AppNavigation() {
+  const { isAuthenticated, userData } = useSelector(state => state.user);
+
+  const role = userData?.user?.role;
+
+  useEffect(()=>{
+
+  },[isAuthenticated])
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {/* These routes are avaliable before auth */}
-        <Stack.Screen name="Login">
-          {(props) => <Login {...props} onLogin={handleLogin} />}
-        </Stack.Screen>
-        <Stack.Screen name="Signup" component={Signup} />
-        <Stack.Screen name="AdminLogin" component={AdminLogin} />
-        <Stack.Screen name="AdminSignup" component={AdminSignup} />
-
-        {/* Conditionally render post-login routes for Admin*/}
-        {isAuthenticated && role == 'admin' && <Stack.Screen name="AdminChannel" component={AdminAppNavigation} />}
-
-        {/* You can add user routes here later like: */}
-            {/* {isAuthenticated && role === 'user' && (
-              <>
-                <Stack.Screen name="UserHome" component={UserHome} />
-                <Stack.Screen name="UserSettings" component={UserSettings} />
-              </>
-            )} */}
-       
-      </Stack.Navigator>
+      <RootStack.Navigator screenOptions={{ headerShown: false }}>
+        {!isAuthenticated ? (
+          <RootStack.Screen name="Public" component={PublicNavigator} />
+        ) : role === 'admin' ? (
+          <RootStack.Screen name="Admin" component={AdminNavigator} />
+        ) : role === 'user' ? (
+          <RootStack.Screen name="User" component={UserNavigator} />
+        ) : (
+          <RootStack.Screen name="Public" component={PublicNavigator} />
+        )}
+      </RootStack.Navigator>
     </NavigationContainer>
   );
-};
-
-export default AppNavigation;
+}

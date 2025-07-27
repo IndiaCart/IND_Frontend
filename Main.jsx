@@ -3,18 +3,21 @@ import { StyleSheet } from 'react-native';
 import React, { useContext } from 'react';
 import App from './App';
 import { ThemeProvider, ThemeContext } from './design/ThemeContext';
+import store, { persistor } from './Redux/Store';
+import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from 'react-redux';
-import store from './Redux/Store';
 
 const Main = () => {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <ThemeProvider>
-          <ThemedWrapper>
-            <App />
-          </ThemedWrapper>
-        </ThemeProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <ThemeProvider>
+            <ThemedWrapper>
+              <App />
+            </ThemedWrapper>
+          </ThemeProvider>
+        </PersistGate>
       </Provider>
     </SafeAreaProvider>
   );
