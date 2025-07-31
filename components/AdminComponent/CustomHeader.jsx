@@ -28,16 +28,7 @@ const CustomHeader = ({ onSearch }) => {
         </View>
       </View>
 
-      {/* Search Bar */}
-      <View style={styles.searchContainer}>
-        <Search size={18} color="#888" />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Search anything in..."
-          placeholderTextColor="#999"
-          onChangeText={onSearch}
-        />
-      </View>
+     
     </View>
   );
 };
@@ -89,14 +80,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     gap: 4,
   },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#f0f0f0',
-    borderRadius: 12,
-    paddingHorizontal: 14,
-    height: 48,
-  },
+  // searchContainer: {
+  //   flexDirection: 'row',
+  //   alignItems: 'center',
+  //   backgroundColor: '#f0f0f0',
+  //   borderRadius: 12,
+  //   paddingHorizontal: 14,
+  //   height: 48,
+  // },
   searchInput: {
     flex: 1,
     marginLeft: 10,

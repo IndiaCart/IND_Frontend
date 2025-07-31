@@ -4,6 +4,7 @@ import { GOOGLE_WEB_CLIENT_ID, GOOGLE_IOS_CLIENT_ID } from '@env';
 import { HOSTED_URL } from '@env';
 import { useDispatch } from 'react-redux';
 import { persistor } from '../Redux/Store';
+import { verifyGoogleLoginUrl } from './apis/platformAPI';
 GoogleSignin.configure({
   webClientId: GOOGLE_WEB_CLIENT_ID,
   iosClientId: GOOGLE_IOS_CLIENT_ID,
@@ -27,7 +28,7 @@ export const handleGoogleLogin = async (dispatch) => {
       throw new Error("Missing ID token or user email from Google");
     }
     // 👇 Send to your backend
-    const backendResp = await axios.post(`${HOSTED_URL}/api/v1/auth/google`, {
+    const backendResp = await axios.post(`${HOSTED_URL}${verifyGoogleLoginUrl}`, {
       token: idToken,
       email: user.email,
     });

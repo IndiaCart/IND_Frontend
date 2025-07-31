@@ -3,7 +3,8 @@ export const LightTheme = {
   background: '#ffffff',
   text: '#033348',
   inputBackground: '#ffffff',
-  placeholder: '#999'
+  placeholder: '#999',
+  inputBackground: '#ffffff'
 
 };
 
@@ -12,5 +13,6 @@ export const DarkTheme = {
   background: '#151515',
   text: '#ffffff',
   inputBackground: '#1e1e1e',
-  placeholder: '#888'
+  placeholder: '#888',
+  inputBackground: '#1e1e1e'
 };

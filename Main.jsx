@@ -6,17 +6,19 @@ import { ThemeProvider, ThemeContext } from './design/ThemeContext';
 import store, { persistor } from './Redux/Store';
 import { PersistGate } from "redux-persist/integration/react";
 import { Provider } from 'react-redux';
-
+import { Provider as PaperProvider } from 'react-native-paper';
 const Main = () => {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <ThemeProvider>
-            <ThemedWrapper>
-              <App />
-            </ThemedWrapper>
-          </ThemeProvider>
+          <PaperProvider>
+            <ThemeProvider>
+              <ThemedWrapper>
+                <App />
+              </ThemedWrapper>
+            </ThemeProvider>
+          </PaperProvider>
         </PersistGate>
       </Provider>
     </SafeAreaProvider>

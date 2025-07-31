@@ -5,6 +5,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { userReducer } from "./reducers/userReducer";
 import { adminReducer } from "./reducers/adminReducer/adminReducer";
+import { manageReducer } from "./reducers/adminReducer/manageReducer";
 
 // Persist config
 const persistConfig = {
@@ -17,6 +18,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer,
   admin: adminReducer,
+  manage:manageReducer
 });
 
 // Create persisted reducer

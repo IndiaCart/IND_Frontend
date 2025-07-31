@@ -18,6 +18,7 @@ import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import LoginSkeleton from '../Shimmer/LoginSkeleton';
 import detectLoginType from '../../utils/detectLoginType';
+import { adminLoginUrl, adminVarifyOTPUrl, sendOtpForLoginUrl } from '../../utils/apis/platformAPI';
 
 const OTP_LENGTH = 6;
 
@@ -39,7 +40,7 @@ const AdminLogin = ({ navigation }) => {
   const sendOtp = async () => {
     if (!loginId) return;
     try {
-      await axios.post(`${HOSTED_URL}/api/v1/auth/sendOtpForLogin`, { [idField]: loginId });
+      await axios.post(`${HOSTED_URL}${sendOtpForLoginUrl}`, { [idField]: loginId });
       setOtpSent(true);
       otpInputs.current[0]?.focus();
     } catch {
@@ -53,7 +54,7 @@ const AdminLogin = ({ navigation }) => {
     if (code.length < OTP_LENGTH) return;
     dispatch({ type: "START_LOADING" })
     try {
-      const response = await axios.post(`${HOSTED_URL}/api/v1/auth/admin/verify-otp`, { [idField]: loginId, otp: code });
+      const response = await axios.post(`${HOSTED_URL}${adminVarifyOTPUrl}`, { [idField]: loginId, otp: code });
       dispatch({ type: "START_LOADING" })
     } catch {
       dispatch({ type: "STOP_LOADING" })
@@ -67,7 +68,7 @@ const AdminLogin = ({ navigation }) => {
     const idField = detectLoginType(loginId);
     dispatch({ type: "START_LOADING" })
     try {
-      const response = await axios.post(`${HOSTED_URL}/api/v1/auth/admin`, { [idField]: loginId, password });
+      const response = await axios.post(`${HOSTED_URL}${adminLoginUrl}`, { [idField]: loginId, password });
       if (response.data.success) {
         dispatch({ type: "EMAIL_PASSWORD_LOGIN_SUCCESS", payload: response.data })
       } else {

@@ -11,7 +11,7 @@ const AdminAppNavigation = () => {
     <>
      <Admin.Navigator screenOptions={{ headerShown: false }}>
       <Admin.Screen name="MainTabs" component={MainTabs} />
-      <Admin.Screen name="EditProfile" component={EditProfile} />
+      {/* <Admin.Screen name="EditProfile" component={EditProfile} /> */}
     </Admin.Navigator>
     </>
   );
